@@ -1,0 +1,302 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger My Prezi"
+  },
+  "tags" : [ {
+    "name" : "user",
+    "description" : "User info"
+  }, {
+    "name" : "role",
+    "description" : "User roles"
+  }, {
+    "name" : "presentation",
+    "description" : "Presentation info"
+  } ],
+  "paths" : {
+    "/users" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Returns the list of users",
+        "operationId" : "listUsers",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of users.",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Add a new user",
+        "operationId" : "addUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "User object that needs to be added",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          }
+        }
+      }
+    },
+    "/users/{userId}" : {
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "Update an existing user witf 'id' userId WIP!",
+        "operationId" : "updateUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user to use",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "User object that needs to be added",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Pet not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Returns the user with userId",
+        "operationId" : "findById",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user to use",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User with id=userId.",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/users/usernames/{username}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Returns the user with the corresponding 'username'",
+        "operationId" : "findByUserName",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "Username of an user",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User with username = 'username'.",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/users/roles/{name}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Returns the list of users with the corressponding role name",
+        "operationId" : "findUsersByRole",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "description" : "Name of an role",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of users with the specified role name.",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/roles" : {
+      "get" : {
+        "tags" : [ "role" ],
+        "summary" : "Returns the list of roles",
+        "operationId" : "listRoles",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of roles.",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Role"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles/{roleId}" : {
+      "put" : {
+        "tags" : [ "role" ],
+        "summary" : "Update a role with roleId WIP",
+        "operationId" : "updateRole",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "roleId",
+          "in" : "path",
+          "description" : "Id of a role",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Role object that needs to be updated",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Role"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Pet not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "role" ],
+        "summary" : "Returns the role with roleId",
+        "operationId" : "findRoleById",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "roleId",
+          "in" : "path",
+          "description" : "Id of a role",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Role with id=roleId.",
+            "schema" : {
+              "$ref" : "#/definitions/Role"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Role" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "properties" : {
+        "userId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "role" : {
+          "$ref" : "#/definitions/Role"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Presentation" : {
+      "type" : "object",
+      "properties" : {
+        "presentation_ID" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "creationDate" : {
+          "type" : "string",
+          "format" : "date"
+        }
+      }
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/DIuliana/prezi/1.0.0",
+  "schemes" : [ "https", "http" ]
+}
