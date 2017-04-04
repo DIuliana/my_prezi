@@ -15,6 +15,194 @@
     "description" : "Presentation info"
   } ],
   "paths" : {
+    "/users" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Returns the list of users",
+        "operationId" : "listUsers",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of users.",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Add a new user",
+        "operationId" : "addUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "User object that needs to be added",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "500" : {
+            "description" : "roleId doesn't exist"
+          }
+        }
+      }
+    },
+    "/users/{userId}" : {
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "Update an existing user witf 'id' userId WIP!",
+        "operationId" : "updateUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user to use",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "User object that needs to be added",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Pet not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Returns the user with userId",
+        "operationId" : "findById",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user to use",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User with id=userId.",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/presentions" : {
+      "get" : {
+        "tags" : [ "presentation" ],
+        "summary" : "Returns the list of presentation related to the user with userId",
+        "operationId" : "listPresentations",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user of to whom the presentations belong",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of presentations.",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Presentation"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "presentation" ],
+        "summary" : "Add a new presentation",
+        "operationId" : "addPresentation",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user of to whom the presentations belong",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "User object that needs to be added",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Presentation"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "500" : {
+            "description" : "roleId doesn't exist"
+          }
+        }
+      }
+    },
+    "/users/{userId}/presentions/{presentationId}" : {
+      "get" : {
+        "tags" : [ "presentation" ],
+        "summary" : "Returns the user with userId",
+        "operationId" : "findPresentation",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user to use",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "presentationId",
+          "in" : "path",
+          "description" : "ID of the presentation",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User with id=userId.",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
     "/roles" : {
       "get" : {
         "tags" : [ "role" ],
@@ -36,28 +224,6 @@
       }
     },
     "/roles/{roleId}" : {
-      "get" : {
-        "tags" : [ "role" ],
-        "summary" : "Returns the role with roleId",
-        "operationId" : "findRoleById",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roleId",
-          "in" : "path",
-          "description" : "Id of a role",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Role with id=roleId.",
-            "schema" : {
-              "$ref" : "#/definitions/Role"
-            }
-          }
-        }
-      },
       "put" : {
         "tags" : [ "role" ],
         "summary" : "Update a role with roleId WIP",
@@ -90,13 +256,11 @@
             "description" : "Validation exception"
           }
         }
-      }
-    },
-    "/roles/{roleId}/users" : {
+      },
       "get" : {
-        "tags" : [ "user" ],
-        "summary" : "Returns the list of users",
-        "operationId" : "listUsers",
+        "tags" : [ "role" ],
+        "summary" : "Returns the role with roleId",
+        "operationId" : "findRoleById",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -108,175 +272,10 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "A list of users.",
+            "description" : "Role with id=roleId.",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/User"
-              }
+              "$ref" : "#/definitions/Role"
             }
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "user" ],
-        "summary" : "Add a new user",
-        "operationId" : "addUser",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roleId",
-          "in" : "path",
-          "description" : "ID of the role",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "description" : "User object that needs to be added",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/User"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Successful operation"
-          }
-        }
-      }
-    },
-    "/roles/{roleId}/users/{userId}" : {
-      "get" : {
-        "tags" : [ "user" ],
-        "summary" : "Returns the user with roleId and userId",
-        "operationId" : "findById",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roleId",
-          "in" : "path",
-          "description" : "ID of the role",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "ID of user to use",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "User with id=userId.",
-            "schema" : {
-              "$ref" : "#/definitions/User"
-            }
-          }
-        }
-      },
-      "put" : {
-        "tags" : [ "user" ],
-        "summary" : "Update an existing user witf 'id' userId WIP!",
-        "operationId" : "updateUser",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roleId",
-          "in" : "path",
-          "description" : "ID of the role",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "ID of user to use",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "description" : "User object that needs to be added",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/User"
-          }
-        } ],
-        "responses" : {
-          "400" : {
-            "description" : "Invalid ID supplied"
-          },
-          "404" : {
-            "description" : "Pet not found"
-          },
-          "405" : {
-            "description" : "Validation exception"
-          }
-        }
-      }
-    },
-    "/roles/{roleId}/users/{userId}/presentations" : {
-      "get" : {
-        "tags" : [ "presentation" ],
-        "summary" : "Returns the list of presentations of user with 'userId'",
-        "operationId" : "findAllPresentationsByUser",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roleId",
-          "in" : "path",
-          "description" : "ID of the role",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "ID of user to use",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "User with id=userId.",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Presentation"
-              }
-            }
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "presentation" ],
-        "summary" : "Create a presentation",
-        "operationId" : "savePresentation",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roleId",
-          "in" : "path",
-          "description" : "ID of the role",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "ID of user to use",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "description" : "Presentation object to be saved",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/Presentation"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Successful operation"
           }
         }
       }
@@ -305,10 +304,10 @@
         "role" : {
           "$ref" : "#/definitions/Role"
         },
-        "firstName" : {
+        "firstname" : {
           "type" : "string"
         },
-        "lastName" : {
+        "lastname" : {
           "type" : "string"
         },
         "username" : {
@@ -329,7 +328,7 @@
           "type" : "integer",
           "format" : "int64"
         },
-        "author" : {
+        "user" : {
           "$ref" : "#/definitions/User"
         },
         "name" : {
