@@ -20,7 +20,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "user_ID")
-	private long id;
+	private Long id;
 	
 	@ManyToOne
     @JoinColumn(name = "role_ID")
@@ -45,7 +45,7 @@ public class User implements Serializable {
 		return id;
 	}
 
-	public void setId(long user_id) {
+	public void setId(Long user_id) {
 		this.id = user_id;
 	}
 	

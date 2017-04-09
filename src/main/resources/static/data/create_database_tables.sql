@@ -17,8 +17,8 @@ CREATE TABLE users (
 
 CREATE TABLE presentations (
     presentation_ID int NOT NULL AUTO_INCREMENT,
+    user_ID int NOT NULL,
     name varchar(255) NOT NULL,
-	user_ID int NOT NULL,
     creation_date datetime NOT NULL,
     PRIMARY KEY (presentation_ID),
 	FOREIGN KEY (user_ID) REFERENCES users(user_ID)

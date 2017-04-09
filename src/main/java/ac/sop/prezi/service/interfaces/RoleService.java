@@ -6,7 +6,7 @@ import ac.sop.prezi.persist.entities.Role;
 
 public interface RoleService {
 
-	Role findById(long id);
+	Role findById(Long id);
 	List<Role>findAll();
 	Role findByName(String name);
 

@@ -7,7 +7,7 @@ import ac.sop.prezi.persist.entities.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long>{
 
-	Role findById(long id);
+	Role findById(Long id);
 	
 	Role findByName(String name);
 	
