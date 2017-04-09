@@ -160,7 +160,7 @@
           "description" : "User object that needs to be added",
           "required" : true,
           "schema" : {
-            "$ref" : "#/definitions/Presentation"
+            "$ref" : "#/definitions/Presentation2"
           }
         } ],
         "responses" : {
@@ -195,9 +195,114 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "User with id=userId.",
+            "description" : "Presentation",
             "schema" : {
-              "$ref" : "#/definitions/User"
+              "$ref" : "#/definitions/Presentation"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/presentions/{presentationId}/slides" : {
+      "get" : {
+        "tags" : [ "slide" ],
+        "summary" : "LS",
+        "operationId" : "listSlides",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user of to whom the presentations belong",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "presentationId",
+          "in" : "path",
+          "description" : "ID of the presentation",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of Slides.",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Slide"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "slide" ],
+        "summary" : "Add a new slide",
+        "operationId" : "addSlide",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user of to whom the presentations belong",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "presentationId",
+          "in" : "path",
+          "description" : "ID of the presenttion",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Slide object that needs to be added",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Slide2"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "500" : {
+            "description" : "roleId doesn't exist"
+          }
+        }
+      }
+    },
+    "/users/{userId}/presentions/{presentationId}/slides/{slideId}" : {
+      "get" : {
+        "tags" : [ "slide" ],
+        "summary" : "LS",
+        "operationId" : "findSlide",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user of to whom the presentations belong",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "presentationId",
+          "in" : "path",
+          "description" : "ID of the presentation",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "slideId",
+          "in" : "path",
+          "description" : "ID of the slide",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of Slides.",
+            "schema" : {
+              "$ref" : "#/definitions/Slide"
             }
           }
         }
@@ -337,6 +442,55 @@
         "creationDate" : {
           "type" : "string",
           "format" : "date"
+        }
+      }
+    },
+    "Presentation2" : {
+      "type" : "object",
+      "properties" : {
+        "presentation_ID" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "creationDate" : {
+          "type" : "string",
+          "format" : "date"
+        }
+      }
+    },
+    "Slide" : {
+      "type" : "object",
+      "properties" : {
+        "slide_ID" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "presentation" : {
+          "$ref" : "#/definitions/Presentation"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "position" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "Slide2" : {
+      "type" : "object",
+      "properties" : {
+        "slide_ID" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "position" : {
+          "type" : "integer"
         }
       }
     }
