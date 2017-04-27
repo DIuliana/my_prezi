@@ -106,4 +106,28 @@ VALUES
 2,
 'slide2',
 2);
+INSERT INTO `my_prezi_test`.`contents`
+(`content_ID`,
+`slide_ID`,
+`position`,
+`url`,
+`text`)
+VALUES
+(1,
+2,
+1,
+'www.google.com',
+"Text al continutului de pe slide");
+INSERT INTO `my_prezi_test`.`contents`
+(`content_ID`,
+`slide_ID`,
+`position`,
+`url`,
+`text`)
+VALUES
+(2,
+2,
+2,
+'www.github.com',
+"Text al continutului de pe slide 222");
 
