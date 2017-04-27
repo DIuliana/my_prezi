@@ -20,7 +20,7 @@ public class PresentationController {
 	PresentationService presentationService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Presentation> getAllByUserId(@PathVariable Long userId) {
+	public List<Presentation> findAllByUserId(@PathVariable Long userId) {
 
 		return presentationService.findAllByUserId(userId);
 
@@ -34,9 +34,9 @@ public class PresentationController {
 	}
 
 	@RequestMapping(value = "/{presentationId}", method = RequestMethod.GET)
-	public Presentation getByUserIdAndPresentationId(@PathVariable Long userId, @PathVariable Long presentationId) {
+	public Presentation findByPresentationId(@PathVariable Long presentationId) {
 
-		return presentationService.findByUserIdAndPresentationId(userId, presentationId);
+		return presentationService.findByPresentationId(presentationId);
 
 	}
 

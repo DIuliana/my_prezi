@@ -10,4 +10,6 @@ import ac.sop.prezi.persist.entities.User;
 public interface PresentationRepository extends JpaRepository<Presentation, Long> {
 
 	List<Presentation> findByUser(User user);
+
+	Presentation findById(Long presentationId);
 }

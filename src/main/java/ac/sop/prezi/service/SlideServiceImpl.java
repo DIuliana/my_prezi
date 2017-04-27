@@ -21,18 +21,18 @@ public class SlideServiceImpl implements SlideService {
 	PresentationService presentationService;
 
 	@Override
-	public List<Slide> findByPresentationId(Long userId, Long presentationId) {
+	public List<Slide> findAllByPresentationId(Long presentationId) {
 
-		Presentation presentation = presentationService.findByUserIdAndPresentationId(userId, presentationId);
+		Presentation presentation = presentationService.findByPresentationId(presentationId);
 
 		return slideRepository.findByPresentation(presentation);
 
 	}
 
 	@Override
-	public void save(Long userId, Long presentationId, Slide slide) {
+	public void save(Long presentationId, Slide slide) {
 
-		Presentation presentation = presentationService.findByUserIdAndPresentationId(userId, presentationId);
+		Presentation presentation = presentationService.findByPresentationId(presentationId);
 
 		// needs checks
 		slide.setPresentation(presentation);
@@ -42,18 +42,9 @@ public class SlideServiceImpl implements SlideService {
 	}
 
 	@Override
-	public Slide findBySlideId(Long userId, Long presentationId, Long slideId) {
+	public Slide findBySlideId(Long slideId) {
 
-		List<Slide> slides = findByPresentationId(userId, presentationId);
+		return slideRepository.findById(slideId);
 
-		for (Slide slide : slides) {
-
-			if (slide.getId().equals(slideId)) {
-				return slide;
-			}
-
-		}
-		return null;
 	}
-
 }

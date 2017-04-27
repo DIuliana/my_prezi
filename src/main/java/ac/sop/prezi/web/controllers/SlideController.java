@@ -20,24 +20,23 @@ public class SlideController {
 	SlideService slideService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Slide> getAll(@PathVariable Long userId, @PathVariable Long presentationId) {
+	public List<Slide> findAllByPresentationId(@PathVariable Long presentationId) {
 
-		return slideService.findByPresentationId(userId, presentationId);
+		return slideService.findAllByPresentationId(presentationId);
 
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void save(@PathVariable Long userId, @PathVariable Long presentationId, @RequestBody Slide slide) {
+	public void save(@PathVariable Long presentationId, @RequestBody Slide slide) {
 
-		slideService.save(userId, presentationId, slide);
+		slideService.save(presentationId, slide);
 
 	}
 
 	@RequestMapping(value = "/{slideId}", method = RequestMethod.GET)
-	public Slide getByUserIsPresentationIdAndSLideId(@PathVariable Long userId, @PathVariable Long presentationId,
-			@PathVariable Long slideId) {
+	public Slide findBySlideId(@PathVariable Long slideId) {
 
-		return slideService.findBySlideId(userId, presentationId, slideId);
+		return slideService.findBySlideId(slideId);
 
 	}
 }

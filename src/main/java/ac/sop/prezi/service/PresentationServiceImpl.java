@@ -29,29 +29,20 @@ public class PresentationServiceImpl implements PresentationService {
 	}
 
 	@Override
-	public Presentation findByUserIdAndPresentationId(Long userId, Long presentationId) {
+	public void save(Long userId, Presentation presentation) {
 
-		List<Presentation> presentations = findAllByUserId(userId);
+		User user = userService.findById(userId);
+		// needs checks
+		presentation.setUser(user);
 
-		for (Presentation pres : presentations) {
-
-			if (pres.getId().equals(presentationId)) {
-				return pres;
-			}
-
-		}
-		return null;
+		presentationRepository.save(presentation);
 
 	}
 
 	@Override
-	public void save(Long userId, Presentation presentation) {
+	public Presentation findByPresentationId(Long presentationId) {
 
-		User user = userService.findById(userId);
-		//needs checks
-		presentation.setUser(user);
-
-		presentationRepository.save(presentation);
+		return presentationRepository.findById(presentationId);
 
 	}
 

@@ -7,10 +7,10 @@ import ac.sop.prezi.persist.entities.Slide;
 
 public interface SlideService {
 
-	List<Slide> findByPresentationId(Long userId, Long presentationId);
+	List<Slide> findAllByPresentationId(Long presentationId);
 
-	void save(Long userId, Long presentationId, Slide slide);
+	void save(Long presentationId, Slide slide);
 	
-	Slide findBySlideId(Long userId, Long presentationId, Long slideId);
-
+	Slide findBySlideId(Long slideId);
+	
 }

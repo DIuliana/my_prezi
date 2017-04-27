@@ -10,6 +10,6 @@ public interface PresentationService {
 
 	void save(Long userId, Presentation presentation);
 
-	Presentation findByUserIdAndPresentationId(Long userId, Long presentationId);
+	Presentation findByPresentationId(Long presentationId);
 
 }
