@@ -1,7 +1,9 @@
 <h2>Tichi taca Barcelona</h2>
 <h3>{{title}}</h3>
 
-<ul>
-	<li *ngFor="let presentation of presentations">{{presentation}}</li>
+<ul *ngFor="let presentation of presentations">
+	<li>Presentation id: {{presentation.id}} </li>
+	<li>Presentation user id: {{presentation.user.id}} </li>
+	<li>Presentation name: {{presentation.name}} </li>
+	<li>Presentation creation date: {{presentation.creationDate}}</li>
 </ul>
-  

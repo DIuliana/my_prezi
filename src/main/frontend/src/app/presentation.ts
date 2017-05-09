@@ -2,8 +2,8 @@
 export class Presentation {
   constructor(
     public id: number,
-    public user_ID:number,
+    public user.id:number,
     public name: string,
-    public creation_date:Date
+    public creationDate:Date
   ){}
 }

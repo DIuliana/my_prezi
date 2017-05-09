@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {PresentationService} from './presentation.service';
 import {Presentation} from './presentation';
@@ -8,21 +8,18 @@ import {Presentation} from './presentation';
   templateUrl: './presentations.component.html',
   providers: [PresentationService]
 })
-export class PresentationsComponent {
+export class PresentationsComponent implements OnInit{
+
   title: string = "Presentation title";
-  presentations;
-  prese:Presentation[];
+  presentations: Presentation[];
 
-  constructor(presentationService: PresentationService) {
-    this.presentations = presentationService.getPresentations();
+  constructor(private presentationService: PresentationService) {}
 
-    // this.prese=presentationService.getPresentations2().subscribe(
-    //   prese => this.prese = prese, //Bind to view
-    //   err => {
-    //     // Log errors if any
-    //     console.log(err);
-    //   });
-    // }
+  ngOnInit():void{
+
+    this.presentationService.getPresentations2().subscribe(presentations=>this.presentations=presentations);
 
   }
+
+
 }

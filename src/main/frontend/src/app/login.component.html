@@ -1,0 +1,20 @@
+<section id="loginPage" class="gb-row">
+  <article class="gb-login-wrap gb-col-8 gb-col-11-medium gb-col-12-small">
+    <div class="gb-login-block gb-clearfix">
+      <div class="gb-col-5 gb-col-12-medium">
+        <div class="gb-login-form">
+          <div class="gb-row gb-col-12 gb-login-logo"></div>
+            <router-outlet></router-outlet>
+          <form>
+            <input  #user type="text" name="login" id="login" class="gb-input gb-login-form-user" value="" autofocus="" placeholder="Email or username">
+            <input #pass type="password" name="password" id="password" class="gb-input gb-login-form-password" placeholder="Password">
+            <button (click)="authUser(user.value, pass.value)"  routerLink="/presentations"  class="btn gb-btn gb-principal-active">Add</button>
+
+          </form>
+        </div>
+      </div>
+      <div class="gb-login-banner-img gb-col-7 gb-col-12-medium">
+      </div>
+    </div>
+  </article>
+</section>

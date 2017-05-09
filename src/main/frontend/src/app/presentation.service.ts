@@ -7,11 +7,13 @@ import{Presentation} from './presentation';
 @Injectable()
 export class PresentationService{
 
+  private presentations_Url='/prezi/api/users/2/presentations';
+
   constructor(private http: Http){}
 
-  getPresentations2():Observable<Presentation []>{
+  getPresentations2(): Observable<Presentation[]>{
 
-    return this.http.get('/users/2/presentations').map((res:Response) => res.json());
+    return this.http.get(this.presentations_Url).map((response:Response)=><Presentation[]> response.json());
   }
 
     getPresentations(){

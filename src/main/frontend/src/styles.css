@@ -1,1 +1,180 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #eee;
+}
+.hide {
+	display: none;
+}
+
+.small-visible {
+	display: none;
+}
+
+/*========== TYPOGRAPHY ==========*/
+
+#loginPage .right h2 {
+	margin: 0 0 20px 0;
+}
+
+/*========== LAYOUT ==========*/
+
+.gb-login-wrap {
+  margin: 150px auto;
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  background-color: #fff;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  -ms-box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  -o-box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.gb-login-block {
+  padding: 25px;
+}
+
+.gb-login-form {
+	padding: 0 30px 0 0;
+}
+
+.gb-login-logo {
+  background-size: 151px auto;
+  margin: 10px 0 25px;
+  width: 100%;
+  height: 34px;
+}
+
+.gb-login-form .gb-forgot {
+	display: block;
+  position: absolute;
+  top: 121px;
+  right: 45px;
+  font-size: 11px;
+}
+
+.gb-login-form .gb-error {
+  margin-top: 0;
+}
+
+.gb-login-form p.gb-contact {
+	margin: 0;
+  color: #777;
+  text-align: center;
+}
+
+.gb-login-banner-img {
+  background: url('http://mckimmoncenter.ncsu.edu/upload/tts-prezi-1.jpg') 0 0 no-repeat;
+  background-size: 100% auto;
+  display: block;
+  width: 80%;
+  min-height: 320px ;
+  margin: 0 auto;
+  border-radius: 3px;
+}
+
+/*========== FORM ==========*/
+
+.gb-login-form input {
+  width: calc(100% - 22px);
+	margin: 0 0 10px;
+  outline: none;
+  position: relative;
+}
+
+.gb-login-form input[type="text"],
+.gb-login-form input[type="password"] {
+  padding-left: 34px;
+  width: calc(100% - 46px);
+}
+
+.gb-login-form input:focus {
+  border-color: #2993f6;
+}
+
+.gb-login-form .gb-user,
+.gb-login-form .gb-password {
+  position: absolute;
+  z-index: 1;
+  left: 11px;
+}
+.gb-login-form .gb-user {
+  top: 81px;
+  background-position: -341px -173px;
+}
+.gb-login-form .gb-user:hover {
+  background-position: -341px -173px;
+}
+.gb-login-form .gb-password {
+  top: 81px;
+  cursor: default !important;
+}
+.gb-login-form .gb-password:hover {
+  background-position: -467px -173px;
+}
+
+.gb-login-form .error {
+	color: #f35958;
+}
+
+.gb-login-form input.gb-btn {
+	width: 100%;
+  top: 81px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+form input.gb-input:nth-child(2) {
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  margin-bottom: 0;
+}
+form input.gb-input:nth-child(3) {
+  border-radius: 0 0 3px 3px;
+}
+form input.gb-input:nth-child(2):focus {
+  border-bottom: solid 1px #2993f6;
+}
+input.gb-input:nth-child(2):focus+input.gb-input:nth-child(3) {
+  border-top: none;
+}
+
+/*==========  MEDIA QUERIES  ==========*/
+
+@media only screen and (max-width : 992px) {
+
+  .small-visible {
+    display: block;
+  }
+
+}
+
+@media only screen and (min-width: 650px) and (max-width : 768px) {
+
+  .gb-login-banner-img {
+    min-height: 427px;
+  }
+
+}
+
+@media only screen and (max-width : 768px) {
+
+  .gb-login-form {
+    padding: 0;
+  }
+
+  .gb-login-form p.gb-contact {
+    margin: 0 0 40px;
+  }
+
+  .gb-login-form .gb-forgot {
+    right: 10px;
+  }
+
+}
