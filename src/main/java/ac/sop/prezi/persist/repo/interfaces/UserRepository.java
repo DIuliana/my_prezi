@@ -8,6 +8,6 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
 
 	User findById(Long id);
 	
-	User findByUserNameAndPassword(String username, String password);
+	User findByUsernameAndPassword(String username, String password);
 
 }

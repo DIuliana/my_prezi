@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Prezi Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<form  th:action="@{/processForm}" th:object="${user}" method="post">
+   Username: <br><input type="text" th:field="${user.username}"/></br>
+   Pass: <br> <input type="password" th:field="${user.password}"/></br>
+   <input type="submit" value="Submit"/>
+</form>
+
+<p>th:text="${message}" </p>
+
+</body>
+</html>

@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByUserNameAndPassword(String userName, String pass) throws UserNotFoundExcecption {
+	public User findByUsernameAndPassword(String userName, String pass) throws UserNotFoundExcecption {
 
-		User user = userRepository.findByUserNameAndPassword(userName, pass);
+		User user = userRepository.findByUsernameAndPassword(userName, pass);
 		if (user == null) {
 			throw new UserNotFoundExcecption();
 		} else {

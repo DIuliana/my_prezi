@@ -16,6 +16,6 @@ public interface UserService {
 
 	void save(User user);
 	
-	User findByUserNameAndPassword(String userName, String pass) throws UserNotFoundExcecption;
+	User findByUsernameAndPassword(String userName, String pass) throws UserNotFoundExcecption;
 
 }

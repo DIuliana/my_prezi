@@ -16,7 +16,7 @@ public class AuthServiceImpl implements AuthService {
 
 	public User auth(String userName, String pass) throws UserNotFoundExcecption {
 
-		return userService.findByUserNameAndPassword(userName, pass);
+		return userService.findByUsernameAndPassword(userName, pass);
 	}
 
 }
