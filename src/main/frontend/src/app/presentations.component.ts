@@ -10,7 +10,7 @@ import {Presentation} from './presentation';
 })
 export class PresentationsComponent implements OnInit{
 
-  title: string = "Presentation title";
+  title: string = "Presentation Component title";
   presentations: Presentation[];
 
   constructor(private presentationService: PresentationService) {}

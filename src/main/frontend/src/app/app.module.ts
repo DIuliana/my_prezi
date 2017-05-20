@@ -11,6 +11,7 @@ import { LoginComponent } from './login.component';
 import {PresentationsComponent} from './presentations.component';
 
 const appRoutes: Routes = [
+  { path: 'login', component: LoginComponent },
   { path: 'presentations', component: PresentationsComponent }
 ];
 
