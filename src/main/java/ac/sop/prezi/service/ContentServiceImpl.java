@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import ac.sop.prezi.persist.entities.Content;
 import ac.sop.prezi.persist.entities.Slide;
 import ac.sop.prezi.persist.repo.interfaces.ContentRepository;
-import ac.sop.prezi.persist.repo.interfaces.SlideRepository;
 import ac.sop.prezi.service.interfaces.ContentService;
+import ac.sop.prezi.service.interfaces.SlideService;
 
 @Service
 public class ContentServiceImpl implements ContentService {
@@ -18,21 +18,21 @@ public class ContentServiceImpl implements ContentService {
 	ContentRepository contentRepository;
 
 	@Autowired
-	SlideRepository slideRepostory;
+	SlideService slideService;
 
 	@Override
-	public List<Content> findAllBySlideId(Long slideId) {
+	public List<Content> findAllBySlideId(Long slideId) throws SlideNotFoundException {
 
-		Slide slide = slideRepostory.findById(slideId);
+		Slide slide = slideService.findBySlideId(slideId);
 
 		return contentRepository.findBySlide(slide);
 
 	}
 
 	@Override
-	public void save(Long slideId, Content content) {
+	public void save(Long slideId, Content content) throws SlideNotFoundException {
 
-		Slide slide = slideRepostory.findById(slideId);
+		Slide slide = slideService.findBySlideId(slideId);
 		// needs checks
 		content.setSlide(slide);
 
@@ -41,9 +41,15 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public Content findByContentId(Long contentId) {
+	public Content findByContentId(Long contentId) throws ContentNotFoundException {
 
-		return contentRepository.findById(contentId);
+		Content content = contentRepository.findById(contentId);
+		if (content == null) {
+			throw new ContentNotFoundException();
+		} else {
+			return content;
+		}
+
 	}
 
 }

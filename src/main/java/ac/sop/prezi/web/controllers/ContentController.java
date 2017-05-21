@@ -3,6 +3,8 @@ package ac.sop.prezi.web.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ac.sop.prezi.persist.entities.Content;
+import ac.sop.prezi.service.ContentNotFoundException;
+import ac.sop.prezi.service.SlideNotFoundException;
 import ac.sop.prezi.service.interfaces.ContentService;
 
 @RestController
@@ -20,23 +24,47 @@ public class ContentController {
 	ContentService contentService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Content> findAllBySlieId(@PathVariable Long slideId) {
+	public ResponseEntity<?> findAllBySlieId(@PathVariable Long slideId) {
 
-		return contentService.findAllBySlideId(slideId);
+		try {
+			List<Content> contents = contentService.findAllBySlideId(slideId);
+			return new ResponseEntity<>(contents, HttpStatus.OK);
+		} catch (SlideNotFoundException exception) {
+
+			String errorMessage;
+			errorMessage = exception + " <== error";
+			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+		}
 
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void save(@PathVariable Long slideId, @RequestBody Content content) {
+	public ResponseEntity<?> save(@PathVariable Long slideId, @RequestBody Content content) {
 
-		contentService.save(slideId, content);
+		try {
+			contentService.save(slideId, content);
+			return new ResponseEntity<>("content added", HttpStatus.OK);
+		} catch (SlideNotFoundException exception) {
+
+			String errorMessage;
+			errorMessage = exception + " <== error";
+			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+		}
 
 	}
 
 	@RequestMapping(value = "/{contentId}", method = RequestMethod.GET)
-	public Content findByContentId(@PathVariable Long contentId) {
+	public ResponseEntity<?> findByContentId(@PathVariable Long contentId) {
 
-		return contentService.findByContentId(contentId);
+		try {
+			Content content = contentService.findByContentId(contentId);
+			return new ResponseEntity<>(content, HttpStatus.OK);
+		} catch (ContentNotFoundException exception) {
+
+			String errorMessage;
+			errorMessage = exception + " <== error";
+			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+		}
 
 	}
 }

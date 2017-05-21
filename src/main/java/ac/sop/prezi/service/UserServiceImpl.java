@@ -29,9 +29,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findById(Long id) {
+	public User findById(Long id) throws UserNotFoundException {
 
-		return userRepository.findById(id);
+		User user = userRepository.findById(id);
+		if (user == null) {
+			throw new UserNotFoundException();
+		} else {
+			return user;
+		}
+
 	}
 
 	@Override
@@ -42,11 +48,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByUserNameAndPassword(String userName, String pass) throws UserNotFoundExcecption {
+	public User findByUserNameAndPassword(String userName, String pass) throws UserNotFoundException {
 
 		User user = userRepository.findByUserNameAndPassword(userName, pass);
 		if (user == null) {
-			throw new UserNotFoundExcecption();
+			throw new UserNotFoundException();
 		} else {
 			return user;
 		}

@@ -21,7 +21,7 @@ public class SlideServiceImpl implements SlideService {
 	PresentationService presentationService;
 
 	@Override
-	public List<Slide> findAllByPresentationId(Long presentationId) {
+	public List<Slide> findAllByPresentationId(Long presentationId) throws PresentationNotFoundException {
 
 		Presentation presentation = presentationService.findByPresentationId(presentationId);
 
@@ -30,7 +30,7 @@ public class SlideServiceImpl implements SlideService {
 	}
 
 	@Override
-	public void save(Long presentationId, Slide slide) {
+	public void save(Long presentationId, Slide slide) throws PresentationNotFoundException {
 
 		Presentation presentation = presentationService.findByPresentationId(presentationId);
 
@@ -42,9 +42,14 @@ public class SlideServiceImpl implements SlideService {
 	}
 
 	@Override
-	public Slide findBySlideId(Long slideId) {
+	public Slide findBySlideId(Long slideId) throws SlideNotFoundException{
 
-		return slideRepository.findById(slideId);
+		Slide slide = slideRepository.findById(slideId);
+		if (slide == null) {
+			throw new SlideNotFoundException();
+		} else {
+			return slide;
+		}
 
 	}
 }

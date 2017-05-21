@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ac.sop.prezi.persist.entities.User;
-import ac.sop.prezi.service.UserNotFoundExcecption;
+import ac.sop.prezi.service.UserNotFoundException;
 import ac.sop.prezi.service.interfaces.AuthService;
 
 @Controller
@@ -25,7 +25,7 @@ public class HomeController {
 		try {
 			User user = authService.auth(username, password);
 			return new ResponseEntity<>(user, HttpStatus.OK);
-		} catch (UserNotFoundExcecption exception) {
+		} catch (UserNotFoundException exception) {
 
 			String errorMessage;
 			errorMessage = exception + " <== error";

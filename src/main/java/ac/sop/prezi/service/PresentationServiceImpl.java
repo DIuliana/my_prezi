@@ -21,7 +21,7 @@ public class PresentationServiceImpl implements PresentationService {
 	UserService userService;
 
 	@Override
-	public List<Presentation> findAllByUserId(Long userId) {
+	public List<Presentation> findAllByUserId(Long userId) throws UserNotFoundException {
 
 		User user = userService.findById(userId);
 
@@ -29,7 +29,7 @@ public class PresentationServiceImpl implements PresentationService {
 	}
 
 	@Override
-	public void save(Long userId, Presentation presentation) {
+	public void save(Long userId, Presentation presentation) throws UserNotFoundException {
 
 		User user = userService.findById(userId);
 		// needs checks
@@ -40,9 +40,14 @@ public class PresentationServiceImpl implements PresentationService {
 	}
 
 	@Override
-	public Presentation findByPresentationId(Long presentationId) {
+	public Presentation findByPresentationId(Long presentationId) throws PresentationNotFoundException {
 
-		return presentationRepository.findById(presentationId);
+		Presentation presentation = presentationRepository.findById(presentationId);
+		if (presentation == null) {
+			throw new PresentationNotFoundException();
+		} else {
+			return presentation;
+		}
 
 	}
 
