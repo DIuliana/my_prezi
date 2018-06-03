@@ -6,7 +6,9 @@ import ac.sop.prezi.service.exceptions.EntityNotFoundException;
 import ac.sop.prezi.service.exceptions.ExceptionMessages;
 import ac.sop.prezi.service.exceptions.InvalidInputException;
 import ac.sop.prezi.service.interfaces.RoleService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -49,13 +51,16 @@ public class RoleServiceImpl implements RoleService{
 	}
 
 	@Override
-	public void delete(Long id) throws EntityNotFoundException {
+	public void delete(Long id) throws EntityNotFoundException, InvalidInputException {
 
 		Role role = roleRepository.findOne(id);
 		if (role == null) {
 			throw new EntityNotFoundException(ExceptionMessages.ROLE_NOT_FOUND_ID.message + id);
+		}try {
+			roleRepository.delete(id);
+		}catch (DataIntegrityViolationException ex){
+			throw new InvalidInputException(ExceptionMessages.ROLE_FOREIGN_KEY.message);
 		}
-		roleRepository.delete(id);
 	}
 
 	@Override
@@ -68,8 +73,12 @@ public class RoleServiceImpl implements RoleService{
 		if (role.getName() == null) {
 			throw new InvalidInputException(ExceptionMessages.ROLE_NAME_MANDATORY.message);
 		}
-		roleToBeUpdated.setName(role.getName());
+        mapRoleValues(role, roleToBeUpdated);
 		roleRepository.save(roleToBeUpdated);
 		return roleToBeUpdated;
 	}
+
+    private void mapRoleValues(Role role, Role roleToBeUpdated) {
+        roleToBeUpdated.setName(role.getName());
+    }
 }
