@@ -2,6 +2,9 @@ package ac.sop.prezi.web.controllers;
 
 import java.util.List;
 
+import ac.sop.prezi.service.exceptions.EntityNotFoundException;
+import ac.sop.prezi.service.exceptions.InvalidInputException;
+import ac.sop.prezi.web.controllers.utils.SuccessMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,32 +22,36 @@ import ac.sop.prezi.service.interfaces.UserService;
 @RequestMapping("/users")
 public class UserContoller {
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public List<User> getAll() {
+    @RequestMapping(method = RequestMethod.GET)
+    public List<User> getAll() {
 
-		return userService.findAll();
-	}
+        return userService.findAll();
+    }
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> findById(@PathVariable Long id) {
-		try {
-			User user = userService.findById(id);
-			return new ResponseEntity<>(user, HttpStatus.OK);
-		} catch (UserNotFoundException exception) {
-			String errorMessage;
-			errorMessage = exception + " <== error";
-			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-		}
+    @RequestMapping(method = RequestMethod.POST)
+    public User save(@RequestBody User user) throws InvalidInputException, EntityNotFoundException {
 
-	}
+        return userService.save(user);
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public void save(@RequestBody User user) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public User findById(@PathVariable Long id) throws EntityNotFoundException{
 
-		userService.save(user);
-	}
+        return  userService.findById(id);
+    }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public SuccessMessage delete(@PathVariable Long id) throws EntityNotFoundException{
+
+        return  userService.delete(id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public User update(@PathVariable Long id, @RequestBody User user) throws EntityNotFoundException, InvalidInputException{
+
+        return  userService.update(id, user);
+    }
 }
