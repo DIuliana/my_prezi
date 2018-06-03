@@ -44,7 +44,7 @@ public class RoleController {
 	public SuccessMessage delete(@PathVariable Long id) throws EntityNotFoundException{
 
 		 roleService.delete(id);
-		 return new SuccessMessage(SuccessMessages.DELETED_ITEM_ID.message + id);
+		 return new SuccessMessage(SuccessMessages.DELETED_ROLE.message + id);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
