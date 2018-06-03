@@ -15,6 +15,156 @@
     "description" : "Presentation info"
   } ],
   "paths" : {
+    "/users" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Returns the list of users",
+        "operationId" : "listUsers",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of all users.",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Add a new user",
+        "operationId" : "addUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [{
+          "in" : "body",
+          "name" : "body",
+          "description" : "User object that needs to be added",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/UserNoID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfull operation",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          },
+          "400" : {
+            "description" : "Invalid input",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Returns the user with roleId and userId",
+        "operationId" : "findById",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "Successfull operation",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfull operation",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          },
+          "404" : {
+            "description" : "User not found",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "user" ],
+        "summary" : "Deletes the user with roleId and userId",
+        "operationId" : "deleteUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "Successfull operation",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfull operation",
+            "schema" : {
+              "$ref" : "#/definitions/SuccessMessage"
+            }
+          },
+          "404" : {
+            "description" : "User not found",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "Update an existing user witf 'id' userId WIP!",
+        "operationId" : "updateUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [{
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of user to use",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "User object that needs to be added",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/UserNoID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfull operation",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          },
+          "400" : {
+            "description" : "Invalid input",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          },
+          "404" : {
+            "description" : "User not found or Role not found",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          }
+        }
+      }
+    },
     "/roles" : {
       "get" : {
         "tags" : [ "role" ],
@@ -24,7 +174,7 @@
         "produces" : [ "application/json" ],
         "responses" : {
           "200" : {
-            "description" : "A list of roles.",
+            "description" : "Successfull operation",
             "schema" : {
               "type" : "array",
               "items" : {
@@ -33,8 +183,39 @@
             }
           }
         }
+      },
+      "post" : {
+        "tags" : [ "role" ],
+        "summary" : "Creates a new role",
+        "operationId" : "createRole",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Role to be created",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/RoleWithNoID"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfull operation",
+            "schema" : {
+              "$ref" : "#/definitions/Role"
+            }
+          },
+          "400" : {
+            "description" : "Invalid input",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          }
+        }
       }
     },
+
     "/roles/{roleId}" : {
       "get" : {
         "tags" : [ "role" ],
@@ -51,16 +232,50 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "Role with id=roleId.",
+            "description" : "Successfull operation",
             "schema" : {
               "$ref" : "#/definitions/Role"
+            }
+          },
+          "404" : {
+            "description" : "Role not found",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "role" ],
+        "summary" : "Deteles the role with roleId",
+        "operationId" : "deleteRole",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "roleId",
+          "in" : "path",
+          "description" : "Id of a role",
+          "required" : true,
+          "type" : "integer"
+        }],
+        "responses" : {
+          "200" : {
+            "description" : "Successfull operation",
+            "schema" : {
+              "$ref" : "#/definitions/SuccessMessage"
+            }
+          },
+          "404" : {
+            "description" : "Role not found",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
             }
           }
         }
       },
       "put" : {
         "tags" : [ "role" ],
-        "summary" : "Update a role with roleId WIP",
+        "summary" : "Update a role with roleId",
         "operationId" : "updateRole",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
@@ -76,141 +291,27 @@
           "description" : "Role object that needs to be updated",
           "required" : true,
           "schema" : {
-            "$ref" : "#/definitions/Role"
+            "$ref" : "#/definitions/RoleWithNoID"
           }
         } ],
         "responses" : {
+          "200" : {
+            "description" : "Successfull operation",
+            "schema" : {
+              "$ref" : "#/definitions/Role"
+            }
+          },
           "400" : {
-            "description" : "Invalid ID supplied"
+            "description" : "Invalid input",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
           },
           "404" : {
-            "description" : "Pet not found"
-          },
-          "405" : {
-            "description" : "Validation exception"
-          }
-        }
-      }
-    },
-    "/roles/{roleId}/users" : {
-      "get" : {
-        "tags" : [ "user" ],
-        "summary" : "Returns the list of users",
-        "operationId" : "listUsers",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roleId",
-          "in" : "path",
-          "description" : "Id of a role",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "A list of users.",
+            "description" : "Role not found",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/User"
-              }
+              "$ref" : "#/definitions/ApiError"
             }
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "user" ],
-        "summary" : "Add a new user",
-        "operationId" : "addUser",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roleId",
-          "in" : "path",
-          "description" : "ID of the role",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "description" : "User object that needs to be added",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/User"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Successful operation"
-          }
-        }
-      }
-    },
-    "/roles/{roleId}/users/{userId}" : {
-      "get" : {
-        "tags" : [ "user" ],
-        "summary" : "Returns the user with roleId and userId",
-        "operationId" : "findById",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roleId",
-          "in" : "path",
-          "description" : "ID of the role",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "ID of user to use",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "User with id=userId.",
-            "schema" : {
-              "$ref" : "#/definitions/User"
-            }
-          }
-        }
-      },
-      "put" : {
-        "tags" : [ "user" ],
-        "summary" : "Update an existing user witf 'id' userId WIP!",
-        "operationId" : "updateUser",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "roleId",
-          "in" : "path",
-          "description" : "ID of the role",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "ID of user to use",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "description" : "User object that needs to be added",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/User"
-          }
-        } ],
-        "responses" : {
-          "400" : {
-            "description" : "Invalid ID supplied"
-          },
-          "404" : {
-            "description" : "Pet not found"
-          },
-          "405" : {
-            "description" : "Validation exception"
           }
         }
       }
@@ -295,10 +396,18 @@
         }
       }
     },
+    "RoleWithNoID" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
     "User" : {
       "type" : "object",
       "properties" : {
-        "userId" : {
+        "id" : {
           "type" : "integer",
           "format" : "int64"
         },
@@ -311,7 +420,50 @@
         "lastName" : {
           "type" : "string"
         },
-        "username" : {
+        "userName" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UserNoID" : {
+      "type" : "object",
+      "properties" : {
+        "role" : {
+          "$ref" : "#/definitions/Role"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "userName" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UserNoRole" : {
+      "type" : "object",
+      "properties" :{
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "userName" : {
           "type" : "string"
         },
         "email" : {
@@ -338,6 +490,31 @@
         "creationDate" : {
           "type" : "string",
           "format" : "date"
+        }
+      }
+    },
+    "ApiError" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "timestamp" : {
+          "type" : "object"
+        }
+      }
+    },
+    "SuccessMessage" : {
+      "type" : "object",
+      "properties" : {
+        "text" : {
+          "type" : "string"
+        },
+        "timestamp" : {
+          "type" : "object"
         }
       }
     }
