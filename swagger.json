@@ -270,6 +270,12 @@
             "schema" : {
               "$ref" : "#/definitions/ApiError"
             }
+          },
+          "400" : {
+            "description" : "Invalid input - there are child entities attached.",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
           }
         }
       },
